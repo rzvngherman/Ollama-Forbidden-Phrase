@@ -7,7 +7,6 @@ internal class Program
     // "AI response is 'non-deterministic' means that identical inputs can produce different outputs when run multiple times."
 
     private const string _AI_URL = "http://host.docker.internal:11434/api/chat";
-    private const string _AI_specific_instructions = "Act like a content filter. Analyze the following text only for the presence of phrases that clearly refer to:1) Diseases (e.g., names of illnesses or medical conditions — but only if it’s clear from context that the word refers to a disease); 2) Racial information (race, ethnicity, or national origin); 3) Political preferences (political parties, ideologies, ffiliations. If the text contains a phrase clearly matching any of these categories, respond with true. Otherwise, respond with false. Do not respond with anything else — no explanations, no lists, no formatting. Just true or false.";
 
     private HttpClient _httpClient;
 
@@ -79,7 +78,7 @@ internal class Program
     {
         Console.WriteLine("--AI is thinking..." + "(" + DateTime.Now + ")");
 
-        var content = _requestDataTemplate
+        var content = _apiRequestTemplate
                         .Replace("#REQUEST_DATA#", inputText)
                         .Replace("#AI_specific_instructions#", _AI_specific_instructions);
 
@@ -93,7 +92,19 @@ internal class Program
         Console.WriteLine(responseModel.message.content);
     }
 
-    private string _requestDataTemplate =
+    private string _AI_specific_instructions = 
+        "Act like a content filter. " +
+        "Analyze the following text only for the presence of phrases that clearly refer to:" +
+        "1) Diseases (e.g., names of illnesses or medical conditions — but only if it’s clear from context that the word refers to a disease); " +
+        "2) Racial information (race, ethnicity, or national origin); " +
+        "3) Political preferences (political parties, ideologies, ffiliations. " +
+        "If the text contains a phrase clearly matching any of these categories, respond with true. " +
+        "Otherwise, respond with false. " +
+        "Do not respond with anything else — no explanations, no lists, no formatting. " +
+        "Just true or false.";
+
+
+    private string _apiRequestTemplate =
         @"
         {
             ""model"": ""llama3"",
