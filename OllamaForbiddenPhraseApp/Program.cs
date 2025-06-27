@@ -138,7 +138,7 @@ internal class Program
         "He told me that a person near to him has cancer.",
 
         //FALSE
-        "Fucking bitch !",
+        "F**k bitch !",
 
         //TRUE
         "He is black."
