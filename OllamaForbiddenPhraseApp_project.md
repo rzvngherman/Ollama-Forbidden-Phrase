@@ -1,3 +1,4 @@
+
 1) create following prompt:
 private string _AI_specific_instructions = 
         "Act like a content filter. " +
